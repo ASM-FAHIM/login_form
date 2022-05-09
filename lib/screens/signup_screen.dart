@@ -1,84 +1,124 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:get/get.dart';
+import 'package:login_signup/controller/signup_controller.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  void login(String email, password) async {
-    try {
-      Response response =
-          await post(Uri.parse('https://reqres.in/api/login'), body: {
-        'email': email,
-        'password': password,
-      });
-      if (response.statusCode == 200) {
-        debugPrint(response.body.toString());
-        debugPrint('Login Successfully');
-      } else {
-        debugPrint('Failed to initialize');
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
+class SignupScreen extends StatelessWidget {
+  final SignupController _signupController = Get.find();
+  SignupScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Center(child: Text("Signup-Api")),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: 'Email',
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.greenAccent,
+        centerTitle: true,
+        title: Text("Signup"),
+      ),
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 60,
+            left: 20,
+            right: 20,
+          ),
+          width: context.width,
+          height: context.height,
+          child: SingleChildScrollView(
+            child: Form(
+              // key: ,
+              child: Column(
+                children: [
+                  Image.asset(
+                    'images/demoLogo.png',
+                    height: 90,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Welcome to RIP coding",
+                    style: TextStyle(
+                      color: Colors.greenAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "User name",
+                      prefixIcon: Icon(Icons.person),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Email",
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: "Password",
+                        prefixIcon: Icon(Icons.vpn_key_sharp),
+                        suffixIcon: IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.remove_red_eye_rounded),
+                        )),
+                    obscureText: true,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Confirm password",
+                      prefixIcon: Icon(Icons.vpn_key_sharp),
+                    ),
+                    obscureText: false,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    height: 50,
+                    width: context.width,
+                    decoration: BoxDecoration(
+                      color: Colors.greenAccent,
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text("Signup_Bro"),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                ),
-                controller: passwordController,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 45,
-                width: 400,
-                decoration: BoxDecoration(
-                  color: Colors.greenAccent,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    debugPrint(emailController.text.toString());
-                    debugPrint(passwordController.text.toString());
-                    login(emailController.text.toString(),
-                        passwordController.text.toString());
-                  },
-                  child: Text('Login'),
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),
